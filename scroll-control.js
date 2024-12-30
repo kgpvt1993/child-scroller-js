@@ -40,40 +40,40 @@ class ChildScroller {
         // console.log(event);
         // console.log("currentScrollTop ",lastYPosition);
         let scrollDirection = (event.deltaY >= 0) ? "down" : "up";
-        const childRect = child.getBoundingClientRect();
+        const childRect = this.child.getBoundingClientRect();
         // const containerRect = container.getBoundingClientRect();
 
         // console.log(divCenterY, ",", viewportCenterY);
 
         // console.log("childRect.height", childRect.height, "window.innerHeight", window.innerHeight);
         if (this.isChildScrolling) {
-            // console.log("child scrolling ");
+            // console.log("this.child scrolling ");
             // console.log(event);
-            // Prevent body scroll while child is scrolling
+            // Prevent body scroll while this.child is scrolling
             event.preventDefault();
             // childRect.y = 30;
             
             this.container.scrollTop = this.lastContainerYBeforeChildScroll;
-            child.scrollTop += event.deltaY; // Transfer scroll to the child
+            this.child.scrollTop += event.deltaY; // Transfer scroll to the this.child
         } else {
-            // Check if the body scroll has reached the child
+            // Check if the body scroll has reached the this.child
             // console.log(childRect);
             // if (childRect.top < containerRect.bottom && childRect.bottom >= containerRect.top) {
 
             if (window.innerHeight > childRect.height && !this.isChildScrollComplete) {
-                // child height less then windows height so child should be in center of view port to do scroll
+                // this.child height less then windows height so this.child should be in center of view port to do scroll
                 let divCenterY = childRect.top + childRect.height / 2;
                 let viewportCenterY = window.innerHeight / 2;
                 let scrollDiff = Math.abs(divCenterY - viewportCenterY);
                 if (scrollDiff >= 0 && scrollDiff <= 20) {
-                    // child scroll
+                    // this.child scroll
 
                     this. isChildScrolling = true;
                     event.preventDefault();
                     if (scrollDirection == "down") {
-                        child.scrollTop += event.deltaY;
+                        this.child.scrollTop += event.deltaY;
                     } else {
-                        child.scrollTop -= event.deltaY;
+                        this.child.scrollTop -= event.deltaY;
                     }
 
 
@@ -81,20 +81,20 @@ class ChildScroller {
                     this.container.scrollTop = this.lastContainerYBeforeChildScroll;
                 }
             } else if (!this.isChildScrollComplete) {
-                // child height greater then viewport height
+                // this.child height greater then viewport height
                 if (scrollDirection == "down" && childRect.top <= 80 && !this.isChildScrollComplete) {
-                    // Allow the child to be scrolled
-                    // console.log("child scrolling ");
+                    // Allow the this.child to be scrolled
+                    // console.log("this.child scrolling ");
                     // console.log(event);
                     this.  isChildScrolling = true;
                     event.preventDefault();
-                    child.scrollTop += event.deltaY;
+                    this.child.scrollTop += event.deltaY;
                     this.lastContainerYBeforeChildScroll = this.container.scrollTop;
                     this.container.scrollTop = this.lastContainerYBeforeChildScroll;
                 } else if (scrollDirection == "up" && childRect.top <= 80 && childRect.top > 30 && !this.isChildScrollComplete) {
                     this.  isChildScrolling = true;
                     event.preventDefault();
-                    child.scrollTop -= event.deltaY;
+                    this.child.scrollTop -= event.deltaY;
                     this.lastContainerYBeforeChildScroll = this.container.scrollTop;
                     this.container.scrollTop = this.lastContainerYBeforeChildScroll;
                 }
@@ -139,11 +139,11 @@ class ChildScroller {
         // Check if child has reached the bottom
         // console.log(lastScrollDirection, child.scrollHeight, child.scrollTop, child.scrollHeight - child.scrollTop, " - ", child.clientHeight);
 
-        if (this.lastScrollDirection == "down" && Math.abs((child.scrollHeight - child.scrollTop) - child.clientHeight) < 5) {
-            // console.log("stop child scrolling");
+        if (this.lastScrollDirection == "down" && Math.abs((this.child.scrollHeight - this.child.scrollTop) - this.child.clientHeight) < 5) {
+            // console.log("stop this.child scrolling");
             this.isChildScrollComplete = true;
-            this.isChildScrolling = false; // Stop child scrolling when it reaches the bottom
-        } else if (this.lastScrollDirection == "up" && child.scrollTop < 5) {
+            this.isChildScrolling = false; // Stop this.child scrolling when it reaches the bottom
+        } else if (this.lastScrollDirection == "up" && this.child.scrollTop < 5) {
             this.isChildScrollComplete = true;
             this. isChildScrolling = false; // Stop child scrolling when it reaches the bottom
 
